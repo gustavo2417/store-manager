@@ -25,8 +25,25 @@ const insertNewProduct = async (req, res) => {
   res.status(201).json(message);
 };
 
+const productUpdate = async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+  await products.updateProduct(name, id);
+
+  res.status(200).json({ id, name });
+};
+
+const productDelete = async (req, res) => {
+  const { id } = req.params;
+  await products.deleteProduct(id);
+
+  res.status(204).json();
+};
+
 module.exports = {
   getAllProducts,
   getByProductID,
   insertNewProduct,
+  productUpdate,
+  productDelete,
 };

@@ -17,8 +17,24 @@ const insertProduct = async (nameProduct) => {
   return { type: null, message: newProduct };
 };
 
+const updateProduct = async (name, id) => {
+  const updatedProduct = await products.update(name, id);
+
+  if (updatedProduct) return { type: null, message: updatedProduct };
+  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+};
+
+const deleteProduct = async (id) => {
+  const deletedProduct = await products.deleteProduct(id);
+
+  if (deletedProduct) return { type: null, message: '' };
+  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+};
+
 module.exports = {
   findById,
   findAll,
   insertProduct,
+  updateProduct,
+  deleteProduct,
 };
