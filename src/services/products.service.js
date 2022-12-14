@@ -31,10 +31,20 @@ const deleteProduct = async (id) => {
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+const getByName = async (q) => {
+  if (q.length > 0) {
+    const result = await products.findByName(q);
+    return { type: null, message: result };
+  }
+  const productsAll = await products.getAllProducts();
+  return { type: null, message: productsAll };
+};
+
 module.exports = {
   findById,
   findAll,
   insertProduct,
   updateProduct,
   deleteProduct,
+  getByName,
 };

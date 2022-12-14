@@ -12,7 +12,24 @@ const findById = async (saleID) => {
     type: null, message: sale };
 };
 
+const deleteSale = async (id) => {
+  await sales.deleteSale(id);
+
+  return { type: null, message: '' };
+};
+
+const insertSale = async (sale) => {
+  const id = await sales.createSale();
+
+  await Promise.all(sale.map(async (saleProduct) => sales.saleProducts(id, saleProduct)));
+  const result = { id, itemsSold: sale };
+
+  return { type: null, message: result };
+};
+
 module.exports = {
   findById,
   findAll,
+  deleteSale,
+  insertSale,
 };

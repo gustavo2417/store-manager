@@ -23,7 +23,33 @@ const findById = async (id) => {
   return camelize(sale);
 };
 
+const deleteSale = async (id) => {
+  const [result] = await connection.execute(
+    'DELETE FROM StoreManager.sales WHERE id = ?',
+    [id],
+  );
+  return result;
+};
+
+const createSale = async () => {
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO StoreManager.sales VALUES ()',
+    [],
+  );
+  return insertId;
+};
+
+const saleProducts = async (saleId, product) => {
+  await connection.execute(
+    'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
+    [saleId, product.productId, product.quantity],
+  );
+};
+
 module.exports = {
   getAllSales,
   findById,
+  deleteSale,
+  createSale,
+  saleProducts,
 };
