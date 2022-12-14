@@ -64,4 +64,22 @@ describe('testando a camada controller de products', function () {
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
+
+  it('testando se um produto específico é retornado pelo nome', async function () {
+    const res = {};
+    const req = {
+      query: { q: 'Martelo' },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'getByName')
+      .resolves({ type: null, message: products[0] });
+
+    await productsController.findByName(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(products[0]);
+  });
 });

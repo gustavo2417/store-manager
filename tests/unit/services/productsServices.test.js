@@ -2,7 +2,7 @@ const productModel = require('../../../src/models/products.model')
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const { findAll, findById, insertProduct, getByName } = require('../../../src/services/products.service');
+const { findAll, findById, insertProduct, getByName, deleteProduct } = require('../../../src/services/products.service');
 const { products, newProduct } = require('./mocks/products.services.mock');
 
 describe('testando a camada services de products', function () {
@@ -47,5 +47,21 @@ describe('testando a camada services de products', function () {
     const result = await getByName('');
 
     expect(result.message).to.be.deep.equal(products);
+  });
+
+  it('testando se não é possivel deletar um produto inexistente', async function () {
+    sinon.stub(productModel, 'deleteProduct').resolves();
+    const result = await deleteProduct(10);
+    const expected = { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+
+    expect(result).to.deep.equal(expected);
+  });
+
+  it('testando se é possivel deletar um produto', async function () {
+    sinon.stub(productModel, 'deleteProduct').resolves(products);
+    const result = await deleteProduct(2);
+    const expected = { type: null, message: '' };
+
+    expect(result).to.deep.equal(expected);
   });
 });
