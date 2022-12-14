@@ -1,18 +1,26 @@
 const products = [
   {
     id: 1,
-    product: 'Martelo de Thor',
+    name: 'Martelo de Thor',
   },
   {
     id: 2,
-    product: 'Traje de encolhimento',
+    name: 'Traje de encolhimento',
   },
   {
     id: 3,
-    product: 'Escudo do Capitão América',
+    name: 'Escudo do Capitão América',
   },
+];
+
+const newProduct = [
+  {
+    id: 20,
+    name: 'Manopla do infinito'
+  }
 ];
 
 module.exports = {
   products,
+  newProduct,
 };
