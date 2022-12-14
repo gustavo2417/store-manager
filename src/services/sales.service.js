@@ -27,9 +27,15 @@ const insertSale = async (sale) => {
   return { type: null, message: result };
 };
 
+const saleUpdate = async (id, sale) => {
+  await Promise.all(sale.map(async (saleProduct) => sales.updateSale(id, saleProduct)));
+  return { type: null, message: { saleId: id, itemsUpdated: { ...sale } } };
+};
+
 module.exports = {
   findById,
   findAll,
   deleteSale,
   insertSale,
+  saleUpdate,
 };

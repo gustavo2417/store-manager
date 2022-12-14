@@ -30,9 +30,20 @@ const insertSales = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const updateSale = async (req, res) => {
+  const { id } = req.params;
+  const sale = req.body;
+  const { type, message } = await sales.saleUpdate(id, sale);
+  if (type) {
+    return res.status(404).json({ message });
+  }
+  return res.status(200).json(message);
+};
+
 module.exports = {
   getSales,
   getByID,
   saleDelete,
   insertSales,
+  updateSale,
 };
